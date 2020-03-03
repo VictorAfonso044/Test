@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Jogo do sorteio</title> 
+        <style>
+            .jogo{display: none;text-align: center;margin: 0 auto;font-size: uppercase;top: 10%;border-radius: 15%;padding: 0,5%;border: solid white 3pt;}
+            label{color: white;display: none;text-align: center;margin: 0 auto;font-size: uppercase;text-transform: uppercase;font-family: }
+            .bjogo{display: none;}
+            div{text-align: center;margin: 0 auto;border: solid white 5pt;padding: 5%;color: white;font-size: large;text-transform: uppercase}
+            button{text-align: center;margin: 0 auto;border-radius: 30%;padding: 3%;position: absolute;top: 40%;right: 45%;background-color: greenyellow;}
+            body{background-color: black;}
+        </style>
+    </head>
+    <body>
+    <div id="div1">CLIQUE ABAIXO PARA SORTEAR UM NUMERO</div>
+    <button type="button" id="Sortear" onclick="sortear();">Sortear</button>
+        <br>
+    <label  id="nome1">Jogador 1</label>
+        <input class="jogo" type="text" id="r1" maxlength="3">
+        <br>
+    <label  id="nome2">Jogador 2</label>
+        <input class="jogo" type="text" id="r2" maxlength="3">
+        <br><br>
+        <button type="button" onclick="conferir();" class="bjogo" id="conferir">Conferir</button>
+        <br><br>
+    <button type="button" onclick="sortear2();" class="bjogo" id="sortear2">Sortear</button>
+        <br><br>
+    <button type="button" onclick="conferir2();" class="bjogo" id="conferir2">Conferir</button>
+        <br>
+        <button type="button" onclick="ganhador();" class="bjogo" id="ganhador">GANHADOR</button>
+    </body>
+    <script>
+        var resposta = Math.floor(Math.random()*100+1);
+        var palpites = 1
+        var tentativas1 =[];
+        var tentativas2 =[];
+        function sortear(){
+        document.getElementById("div1").innerHTML = "Agora Jogador 1 tente acertar qual foi o numero sorteado de 0 a 100. \n Clique em conferir para descobrir. "
+        document.getElementById("Sortear").style.display = 'none';
+
+            document.getElementById("nome1").style.display = 'block';
+            document.getElementById("r1").style.display = 'block';
+            document.getElementById("conferir").style.display = 'block';
+    }
+        function conferir(){
+            var r1 = document.getElementById("r1").value;
+            if (r1==resposta){
+                tentativas1.push(r1);
+                document.getElementById("div1").innerHTML = "UAU VOCE ACERTOU COM  " + palpites +" TENTATIVAS PARABÉNS. E COM OS NUMEROS "+tentativas1+" \n               JOGADOR 2 CLIQUE EM SORTEAR PARA COMEÇAR";
+                document.getElementById("sortear2").style.display = 'block';
+                document.getElementById("conferir2").style.display = 'block';
+            document.getElementById("nome1").style.display = 'none';
+            document.getElementById("r1").style.display = 'none';
+            document.getElementById("conferir").style.display = 'none';
+            document.getElementById("conferir2").style.display = 'none';
+            }
+            if (r1>resposta){
+                  document.getElementById("div1").innerHTML = "O "+r1+" É MAIOR QUE O NUMERO SORTEADO";
+                  palpites++;
+            tentativas1.push(r1);}
+            if(r1<resposta){
+                   document.getElementById("div1").innerHTML = "O "+r1+" É MENOR QUE O NUMERO SORTEADO";
+                palpites++;
+            tentativas1.push(r1);}
+        }
+        var resposta2 = Math.floor(Math.random()*100+1);
+        function sortear2(){
+            document.getElementById("div1").innerHTML = "Jogador 2 sua vez de tentar acertar qual foi o numero sorteado de 0 a 100. \n Clique em conferir para descobrir."  
+            document.getElementById("nome2").style.display = 'block';
+            document.getElementById("r2").style.display = 'block';  
+            document.getElementById("conferir2").style.display = 'block';
+            document.getElementById("sortear2").style.display = 'none';
+        }
+         var palpites2 = 1
+        function conferir2(){ 
+            var r2 = parseInt(document.getElementById("r2").value);
+            if (r2==resposta2){
+                tentativas2.push(r2);
+                document.getElementById("div1").innerHTML = "UAU VOCE ACERTOU COM  "+palpites2+" TENTATIVAS PARABÉNS.E COM OS NUMEROS "+tentativas2+". \nCLIQUE EM GANHADOR PARA DESCOBRIR QUEM GANHOU";
+                document.getElementById("ganhador").style.display = 'block';
+                document.getElementById("conferir2").style.display = 'none';
+            }
+                if (r2>resposta2){
+                  document.getElementById("div1").innerHTML = "O "+r2+" É MAIOR QUE O NUMERO SORTEADO";
+                  palpites2++;
+            tentativas2.push(r2);}
+            if(r2<resposta2){
+                   document.getElementById("div1").innerHTML = "O "+r2+" É MENOR QUE O NUMERO SORTEADO";
+                palpites2++;
+            tentativas2.push(r2);}   
+        } 
+        function ganhador(){ 
+            document.getElementById("nome2").style.display = 'none'; 
+            document.getElementById("r2").style.display = 'none'; 
+            if (palpites>palpites2)
+                document.getElementById("div1").innerHTML = "PARABÉNS JOGADOR 2 VOCÊ GANHOU "+palpites+" TENTATIVAS CONTRA "+palpites2+" TENTATIVAS DO JOGADOR 1.";
+            if (palpites<palpites2)
+                document.getElementById("div1").innerHTML = "PARABÉNS JOGADOR 1 VOCÊ GANHOU COM  "+palpites2+" TENTATIVAS CONTRA"+palpites+" TENTATIVAS DO JOGADOR 2.";
+            if (palpites==palpites2)
+               document.getElementById("div1").innerHTML = "UAU MAS UAU MESMO ESSE JOGO TERMINOU EMPATADO.";
+        }
+    </script>
+    </html>
